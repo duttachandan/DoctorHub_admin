@@ -1,0 +1,37 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+import type { InitialState } from "../../../@type/authInterface";
+
+const initialState: InitialState = {
+  status: "idle",
+  data: [],
+  error: null,
+};
+
+// Creating asyncThunk
+import { adminLogin } from "../../../api/authApi";
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(adminLogin.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(adminLogin.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.data.push(action.payload);
+      })
+      .addCase(adminLogin.rejected, (state, action) => {
+        state.data = [];
+        state.status = "rejected";
+        state.error = action.payload || "login failed";
+      });
+  },
+});
+
+
+export default authSlice.reducer;
+
