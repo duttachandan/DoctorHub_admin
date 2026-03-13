@@ -10,22 +10,21 @@ export const adminLogin = createAsyncThunk<
 >(
   "auth/adming",
   async ({ email, password }: AuthInterface, { rejectWithValue }) => {
+    let reqPassword = password;
     try {
       const response: AxiosResponse = await axios.post<AdminLoginResponse>(
-        `${import.meta.env.VITE_API_LINK}/generateotp`,
+        `${import.meta.env.VITE_API_LINK}/adminlogin`,
         {
           email,
-          password,
+          reqPassword,
         },
       );
       console.log(response.data);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error.message);
-        return rejectWithValue(error.message || error.response?.data?.message);
+        return rejectWithValue(error?.response?.data?.message);
       }
-      console.log(error);
       return rejectWithValue("unexpected error occured");
     }
   },

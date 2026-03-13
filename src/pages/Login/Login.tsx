@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,6 +9,8 @@ import type {
   AuthInterface,
 } from "../../@type/authInterface";
 import type { AppDispatch } from "../../store/Store";
+import ErrorModule from "../../utils/ErrorModule";
+import { useNavigate } from "react-router";
 
 const schemaValidation = yup
   .object()
@@ -18,6 +21,9 @@ const schemaValidation = yup
   .required();
 
 const Login = () => {
+  const [showModal, setShowModal] = useState<boolean>();
+  const [message, setMessage] = useState<string>("");
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -33,14 +39,22 @@ const Login = () => {
       const response: AdminLoginResponse = await dispatch(
         adminLogin(data),
       ).unwrap();
-      console.log(response);
+      if (response.success) {
+        navigate("/otp");
+      }
     } catch (error) {
-      console.log(error);
+      setMessage(error as string);
+      setShowModal(true);
     }
   };
 
   return (
     <main className="min-vh-100 d-flex justify-content-center align-items-center">
+      <ErrorModule
+        showModal={showModal}
+        setShowModal={setShowModal}
+        message={message}
+      />
       <section>
         <div className="container">
           <form className="row" onSubmit={handleSubmit(submitNow)}>
