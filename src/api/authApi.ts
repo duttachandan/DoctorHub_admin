@@ -8,7 +8,7 @@ export const adminLogin = createAsyncThunk<
   AuthInterface,
   { rejectValue: string }
 >(
-  "auth/adming",
+  "auth/adminLogin",
   async ({ email, password }: AuthInterface, { rejectWithValue }) => {
     let reqPassword = password;
     try {
@@ -19,11 +19,13 @@ export const adminLogin = createAsyncThunk<
           reqPassword,
         },
       );
-      console.log(response.data);
+      localStorage.setItem("token", response?.data?.accessToken);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return rejectWithValue(error?.response?.data?.message);
+        return rejectWithValue(
+          error?.response?.data?.message,
+        );
       }
       return rejectWithValue("unexpected error occured");
     }
