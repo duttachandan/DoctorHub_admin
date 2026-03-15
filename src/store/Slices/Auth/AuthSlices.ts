@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import type { InitialState } from "../../../@type/authInterface";
 
 const initialState: InitialState = {
@@ -9,7 +8,7 @@ const initialState: InitialState = {
 };
 
 // Creating asyncThunk
-import { adminLogin } from "../../../api/authApi";
+import { adminLogin, RefreshToken } from "../../../api/authApi";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -28,10 +27,20 @@ export const authSlice = createSlice({
         state.data = [];
         state.status = "rejected";
         state.error = action.payload || "login failed";
+      })
+      .addCase(RefreshToken.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(RefreshToken.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.data.push(action.payload);
+      })
+      .addCase(RefreshToken.rejected, (state, action) => {
+        state.status = "rejected";
+        state.data = [];
+        state.error = (action.payload as string) || "Access Token Expired";
       });
   },
 });
 
-
 export default authSlice.reducer;
-
