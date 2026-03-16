@@ -1,13 +1,10 @@
-// import "./scss/style.scss";
 import { createBrowserRouter, RouterProvider } from "react-router";
-// import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 // Coustom Pages
-import Layout from "./pages/Layout/Layout";
+import Layout from "./pages/Layout/ProtectedLayout";
 import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-// import { type RootState } from "./store/Store";
+import About from "./pages/About/About";
+import CreateDoctor from "./pages/CreateDoctor/CreateDoctor";
 
 function App() {
   const routes = createBrowserRouter([
@@ -18,6 +15,14 @@ function App() {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/createdoctor",
+          element: <CreateDoctor />,
         },
       ],
     },

@@ -1,10 +1,11 @@
-
 const Footer = () => {
   return (
-    <div>
-      Footer
-    </div>
-  )
-}
+    <footer>
+      <div className="container">
+        <div className="fs-1">Footer</div>
+      </div>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;

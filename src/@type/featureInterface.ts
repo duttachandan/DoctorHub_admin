@@ -5,3 +5,20 @@ export interface ModalObj {
   setShowModal: typeof React.useState;
   message: string;
 }
+
+export interface CreateDoctorType {
+  name: string;
+  specialization: string;
+  fees: number;
+  avilableSlots: {
+    date:
+      | "Sunday"
+      | "Monday"
+      | "Tuesday"
+      | "Wednesday"
+      | "Thursday"
+      | "Friday"
+      | "Saturday";
+    time: string;
+  }[];
+}

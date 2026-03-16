@@ -11,7 +11,7 @@ const Navbar = () => {
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
+            data-bs-toggle="offcanvas"
             data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
@@ -19,16 +19,19 @@ const Navbar = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <div
+            className="offcanvas offcanvas-end p-5 p-lg-0"
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav mx-auto text-center mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink to="/" className="nav-link active" aria-current="page">
                   Home
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/Login" className="nav-link" >
-                  Login
+                <NavLink to="/createdoctor" className="nav-link">
+                  Create Doctor
                 </NavLink>
               </li>
               <li className="nav-item dropdown">

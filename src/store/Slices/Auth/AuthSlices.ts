@@ -13,7 +13,13 @@ import { adminLogin, RefreshToken } from "../../../api/authApi";
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    // checkToken: (state, action) => {
+    //   if (localStorage.getItem("token")) {
+    //     state.data.push({ isAuthentiCated: true });
+    //   }
+    // },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(adminLogin.pending, (state, action) => {
