@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,6 +11,7 @@ import type {
 import type { AppDispatch } from "../../store/Store";
 import ErrorModule from "../../utils/ErrorModule";
 import { useNavigate } from "react-router";
+
 
 const schemaValidation = yup
   .object()
@@ -39,9 +40,7 @@ const Login = () => {
       const response: AdminLoginResponse = await dispatch(
         adminLogin(data),
       ).unwrap();
-      if (response.success) {
-        navigate("/otp");
-      }
+      console.log(response);
     } catch (error) {
       setMessage(error as string);
       setShowModal(true);
@@ -51,7 +50,7 @@ const Login = () => {
   return (
     <main className="min-vh-100 d-flex justify-content-center align-items-center">
       <ErrorModule
-        showModal={showModal}
+        showModal={showModal || false}
         setShowModal={setShowModal}
         message={message}
       />

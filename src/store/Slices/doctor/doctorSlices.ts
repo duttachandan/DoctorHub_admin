@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { InitialState } from "../../../@type/authInterface";
 
-import { doctorCall, getDoctor, addDoctor } from "../../../api/doctorApi";
+import { doctorCall, addDoctor } from "../../../api/doctorApi";
 
 const initialState: InitialState = {
   status: "idle",
@@ -26,21 +26,6 @@ const doctorSlice = createSlice({
         state.status = "rejected";
         state.data = [];
         state.error = action.payload as string;
-      })
-      .addCase(getDoctor.pending, (state, action) => {
-        state.status = "pending";
-      })
-      .addCase(getDoctor.fulfilled, (state, action) => {
-        state.status = "fulfilled";
-        state.data.push(action.payload);
-      })
-      .addCase(getDoctor.rejected, (state, action) => {
-        state.status = "rejected";
-        state.data = [];
-        state.error = action.payload as string;
-      })
-      .addCase(addDoctor.pending, (state, action) => {
-        state.status = "pending";
       })
       .addCase(addDoctor.fulfilled, (state, action) => {
         state.status = "fulfilled";

@@ -11,7 +11,6 @@ const Layout = () => {
     localStorage.getItem("token"),
   );
   const authToken = useSelector<RootState>((data) => data.auth.data);
-
   useEffect(() => {
     setToken(localStorage.getItem("token"));
   }, [authToken]);

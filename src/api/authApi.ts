@@ -1,7 +1,7 @@
-import axios, { Axios, type AxiosResponse } from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import type { AdminLoginResponse, AuthInterface } from "../@type/authInterface";
+axios.defaults.withCredentials = true;
 
 export const adminLogin = createAsyncThunk<
   AdminLoginResponse,
@@ -29,26 +29,3 @@ export const adminLogin = createAsyncThunk<
     }
   },
 );
-
-export const RefreshToken = createAsyncThunk(
-  "auth/refreshToken",
-  async (_, { rejectWithValue }) => {
-    try {
-      let response: AxiosResponse = await axios.get(
-        `${import.meta.env.VITE_API_LINK}/refreshtoken`,
-        {
-          withCredentials: true,
-        },
-      );
-      console.log(response);
-      localStorage.setItem("token", response?.data?.accessToken);
-      return response?.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(error?.response?.data?.message);
-      }
-    }
-  },
-);
-
-

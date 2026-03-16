@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { type AxiosResponse } from "axios";
+import { api } from "./apiInterceptor";
 
 export const doctorCall = createAsyncThunk(
   "doctor/allDcotor",
@@ -18,51 +19,19 @@ export const doctorCall = createAsyncThunk(
   },
 );
 
-export const getDoctor = createAsyncThunk(
-  "doctor/getDoctor",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response: AxiosResponse = await axios.get(
-        `${import.meta.env.VITE_API_LINK}/createdoctors`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        },
-      );
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return error?.response?.data?.message;
-      }
-      return error;
-    }
-  },
-);
-
 export const addDoctor = createAsyncThunk(
   "doctor/createDoctor",
   async (formData, { rejectWithValue }) => {
     try {
       console.log(formData);
-      const createDoctor = await axios.post(
-        `${import.meta.env.VITE_API_LINK}/createdoctors`,
-        formData,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        },
-      );
-      console.log(createDoctor.data);
+      const createDoctor = await api.post(`/createdoctors`, formData);
+      console.log(createDoctor);
+      return createDoctor?.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error?.response?.data?.message);
         return rejectWithValue(error?.response?.data?.message);
       }
-      return error;
+      return rejectWithValue("something went wrong");
     }
   },
 );
-
-

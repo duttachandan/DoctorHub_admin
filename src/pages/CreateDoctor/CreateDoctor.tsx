@@ -46,10 +46,12 @@ const CreateDoctor = () => {
   });
 
   const onSubmit: SubmitHandler<CreateDoctorType> = async (data) => {
-    console.log(data);
     try {
-      const response = await dispatch(addDoctor(data)).unwrap();
-      console.log(response);
+      console.log(data)
+      if (data) {
+        const response = await dispatch(addDoctor(data)).unwrap();
+        console.log(response);
+      }
     } catch (error) {
       return error;
     }
